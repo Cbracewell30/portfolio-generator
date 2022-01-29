@@ -15,12 +15,30 @@ const promptUser = () => {
     {
       type: 'input',
       name: 'name',
-      message: 'What is your name?'
-    },
+      message: 'What is your name?',
+      validate: nameInput => {
+        if(nameInput){
+          return true
+        }
+        else{
+          console.log('Please enter your name!')
+          return false
+        }
+}
+          },
     {
       type: 'input',
       name: 'github',
-      message: 'Enter your GitHub Username'
+      message: 'Enter your GitHub Username',
+      validate: gitNameInput => {
+        if(gitNameInput){
+          return true
+        }
+        else{
+          console.log('Please enter your GitHub username!')
+          return false
+        }
+}
     },
     {
       type: 'input',
@@ -43,12 +61,30 @@ Add a New Project
     {
       type: 'input',
       name: 'name',
-      message: 'What is the name of your project?'
+      message: 'What is the name of your project?',
+      validate: projectNameInput => {
+        if(projectNameInput){
+          return true
+        }
+        else{
+          console.log('Please enter the name of your Project!')
+          return false
+        }
+}
     },
     {
       type: 'input',
       name: 'description',
-      message: 'Provide a description of the project (Required)'
+      message: 'Provide a description of the project (Required)',
+      validate: projectDescriptionInput => {
+        if(projectDescriptionInput){
+          return true
+        }
+        else{
+          console.log('Please enter a description of your project!')
+          return false
+        }
+}
     },
     {
       type: 'checkbox',
@@ -59,7 +95,16 @@ Add a New Project
     {
       type: 'input',
       name: 'link',
-      message: 'Enter the GitHub link to your project. (Required)'
+      message: 'Enter the GitHub link to your project. (Required)',
+      validate: linkInput => {
+        if(linkInput){
+          return true
+        }
+        else{
+          console.log('Please add your github link!')
+          return false
+        }
+}
     },
     {
       type: 'confirm',
