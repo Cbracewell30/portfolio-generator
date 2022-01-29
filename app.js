@@ -1,7 +1,6 @@
 const inquirer = require('inquirer')
-const fs = require('fs');
 const generatePage = require('./src/page-template');
-
+const { writeFile, copyFile } = require('./utils/generate-site.js');
 
 
 const promptUser = () => {
@@ -56,14 +55,17 @@ const promptUser = () => {
 };
 
 const promptProject = portfolioData => {
-  if (!portfolioData.projects){
-  portfolioData.projects = [];
-  }
+  
   console.log(`
 =================
 Add a New Project
 =================
 `);
+
+if (!portfolioData.projects){
+  portfolioData.projects = [];
+  }
+
   return inquirer.prompt([
     {
       type: 'input',
@@ -119,6 +121,7 @@ Add a New Project
       message: 'Would you like to feature this project?',
       default: false
     },
+    
     {
       type: 'confirm',
       name: 'confirmAddProject',
@@ -137,12 +140,21 @@ Add a New Project
   
 };
 
-promptUser().then(promptProject)
+promptUser()
+.then(promptProject)
 .then(portfolioData => {
-  const pageHTML = generatePage(portfolioData);
-
-    fs.writeFile('./index.html', pageHTML, err => {
-      if (err) throw new Error(err);
-    })
-
+  return generatePage(portfolioData);
+})
+.then(pageHTML => {
+  return writeFile(pageHTML);
+})
+.then(writeFileResponse => {
+  console.log(writeFileResponse);
+  return copyFile();
+})
+.then(copyFileResponse => {
+  console.log(copyFileResponse);
+})
+.catch(err => {
+  console.log(err);
 });
